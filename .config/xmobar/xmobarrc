@@ -1,0 +1,89 @@
+Config { font            = "xft:SauceCodePro Nerd Font:weight=bold:pixelsize=11:antialias=true:hinting=true"
+       , additionalFonts = [ "xft:mononoki Nerd Font Mono:style=Regular:pixelsize=25"
+                           , "xft:mononoki Nerd Font Mono:style=Regular:pixelsize=17"
+                           , "xft:Font Awesome 6 Free Solid:pixelsize=14"
+                           , "xft:Font Awesome 6 Brands:pixelsize=14"
+                           ]
+       , bgColor      = "#1E1E1E"
+       , fgColor      = "#D4D4D4"
+       -- Position TopSize and BottomSize take 3 arguments:
+       --   an alignment parameter (L/R/C) for Left, Right or Center.
+       --   an integer for the percentage width, so 100 would be 100%.
+       --   an integer for the minimum pixel height for xmobar, so 24 would force a height of at least 24 pixels.
+       --   NOTE: The height should be the same as the trayer (system tray) height.
+       , position       = TopSize L 100 24
+       , lowerOnStart = True
+       , hideOnStart  = False
+       , allDesktops  = True
+       , persistent   = True
+       , iconRoot     = ".xmonad/xpm/"  -- default: "."
+       , commands = [   -- Prints Arch Icon
+                      Run Com "echo" [""] "arch" 72000
+
+                    , Run Cpu ["-t", "<fn=1>\xf85a</fn> <total>%",
+                               "-H","50","--h","#c51e3a"
+                               ] 20
+
+                        -- Core Temperature
+                    , Run CoreTemp ["-t", "<fn=2>\xe20c</fn> <core0>|<core1>°C",
+                                    "-H", "70", "-h", "#bf616a"
+                                    ] 20
+
+                        -- Sound
+                    , Run Alsa "default" "Master" 
+                                  [ "-t", "<status> <volume>%"
+                                  , "--"
+                                  , "-o", "<fn=1>\xfa80</fn>"
+                                  , "-O", "<fn=1>\xfa7d</fn>"
+                                  , "-c", "#4c566a", "-C", "#d8dee9"
+                                  ] 
+
+                        -- Network speeds
+                    , Run DynNetwork ["-t", "[<rx>|<tx>]", "-S", "True"] 60
+
+                        -- Wireless
+                    , Run Wireless "" ["-t", "<fn=1>\xfaa8</fn> <essid>"] 60
+
+                        -- Ram used number and percent
+                    , Run Memory ["-t", "<fn=1>\xf233</fn> <used>M (<usedratio>%)"] 20
+
+                        -- Disk space free
+                    , Run DiskU [("/", "<fn=1>\xf0c7</fn> <free>")] [] 60
+
+                        -- Battery
+                    , Run BatteryP ["BAT0"] 
+                                  [ "-t", "<acstatus> <left> (<timeleft>)"
+                                  , "-L", "10", "-H", "90"
+                                  , "-W", "0"
+                                  , "-f", "\xf244\xf243\xf243\xf241\xf240"
+                                  , "--"
+                                  , "-P", "true"
+                                  , "-A", "10"
+                                  , "-a", "notify-send -u critical 'Low Battery'"
+                                  , "-p", "green"
+                                  , "-i", "<fn=1><leftbar></fn><fn=2>\xf1e6</fn>"
+                                  , "-O", "<fn=1><leftbar></fn><fn=2>\xf1e6</fn>"
+                                  , "-o", "<fn=1><leftbar></fn>"
+                                  , "-H", "10", "-L", "7"
+                                  ] 100
+
+                        -- Keyboard layout
+                    , Run Kbd [("us(dvorak)", "DV"), ("us", "US")]
+
+                        -- Time and date
+                    , Run DateZone "<fn=1>\xf017</fn> %d %b %Y - %I:%M%P " "en_SG.UTF-8" "" "date" 50
+
+                        -- Pacman Icon
+                    , Run Com "echo" [""] "pacicon" 36000
+
+                        -- Pacman Updates
+                    , Run Com ".config/xmobar/pacupdate" [] "pacupdate" 36000
+
+                        -- Prints out the left side items such as workspaces, layout, etc.
+                    , Run UnsafeStdinReader
+                    ]
+       , sepChar = "%"
+       , alignSep = "}{"
+       , template = " <fc=#1793d1><fn=1>%arch%</fn></fc> <fc=#4c566a>|</fc> <fc=#f19cbb>%UnsafeStdinReader%</fc>  }{  <action=`kitty -e sudo pacman -Syu`><fn=1>%pacicon%</fn> %pacupdate%</action>  %coretemp%  %cpu%  <action=`nm-connection-editor`>%wi% %dynnetwork%</action>  %battery%  <action=`pavucontrol`>%alsa:default:Master%</action>  %kbd%  %date%"
+       }
+
