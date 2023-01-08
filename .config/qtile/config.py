@@ -332,7 +332,7 @@ def open_pavu():
 
 screens = [
     Screen(
-        wallpaper="~/dotfiles/wallpapers/arch_linux_feat_hatsune_miku_by_nesyah_de70pg7.jpg",
+        wallpaper="~/dotfiles/wallpapers/wallpaperflare.com_wallpaper (2).jpg",
         wallpaper_mode="fill",
         top=bar.Bar(
             [
