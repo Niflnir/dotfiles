@@ -496,7 +496,7 @@ screens = [
         ),
     ),
     Screen(
-        wallpaper="~/dotfiles/wallpapers/arch_linux_feat_hatsune_miku_by_nesyah_de70pg7.jpg",
+        wallpaper="~/dotfiles/wallpapers/3wdudrbvap0a1.png",
         wallpaper_mode="fill",
         top=bar.Bar(
             [
