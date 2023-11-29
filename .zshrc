@@ -77,7 +77,7 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git vi-mode zsh-syntax-highlighting zsh-autosuggestions)
+plugins=(git)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -106,25 +106,39 @@ source $ZSH/oh-my-zsh.sh
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
-#
+
+# Utils
+alias findd='function _finddir() { find . -type d -name "$1"; }; _finddir'
+alias findf='function _findfile() { find . -type f -name "$1"; }; _findfile'
+
+# Docker
+alias dstart="sudo systemctl start docker"
+alias dit="docker run -it"
+
+# Git
+alias gs="git status"
+alias gl="git log"
+alias gcm="git commit -m"
+alias gsw="git switch"
+alias gcano="git commit --amend --no-edit"
+alias gcam="git commit --amend -m"
+
+# Docker
+alias dps="docker ps"
+alias dpsa="docker ps -a"
+alias drm="docker remove"
+alias dit="docker exec -it"
+
+# Systemctl
+alias sst="systemctl status"
+alias sen="systemctl enable"
+
+alias vim="nvim"
+alias srcz="source ~/.zshrc"
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
-alias vim=nvim
 
-# >>> conda initialize >>>
-# !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/opt/miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
-if [ $? -eq 0 ]; then
-    eval "$__conda_setup"
-else
-    if [ -f "/opt/miniconda3/etc/profile.d/conda.sh" ]; then
-        . "/opt/miniconda3/etc/profile.d/conda.sh"
-    else
-        export PATH="/opt/miniconda3/bin:$PATH"
-    fi
-fi
-unset __conda_setup
-# <<< conda initialize <<<
-
+# Load Angular CLI autocompletion.
+source <(ng completion script)
