@@ -47,3 +47,9 @@ keymap("v", ">", ">gv", opts)
 -- Keep pasted code in clipboard
 -- _dp means null clipboard
 keymap("v", "p", '"_dP', opts)
+
+-- Debugger
+keymap("n", "<leader>dt", ":lua require('dapui').toggle()<CR>", opts)
+keymap("n", "<leader>db", ":DapToggleBreakpoint<CR>", opts)
+keymap("n", "<leader>dc", ":DapContinue<CR>", opts)
+keymap("n", "<leader>dr", ":lua require('dapui').open({reset = true})<CR>", opts)
